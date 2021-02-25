@@ -81,58 +81,55 @@ public class GunControll : MonoBehaviour
     private bool isRealoding = false;
     private float currentBullets = 0;
     private float shootAgainTime = 0;
-    private float currentRecoil = 0;
+    private float currentGunRecoil = 0;
     private float resetRecoilTime = 0;
+    private float circleRecoil = 0;
 
     private void Start()
     {
         DamageMultipliers = new float[] { 1 };
-        currentBullets = MaxBullets; 
+        currentBullets = MaxBullets;
         UpdateBulletSlotsInterface();
-    }
-    public bool isLeftA(Vector2 point)
-    {
-        var a = new Vector2(-1, 1);
-        var b = new Vector3(1, -1);
-        return ((b.x - a.x) * (point.y - a.y) - (b.y - a.y) * (point.x - a.x)) > 0;
-    }
-
-    public bool isLeftB(Vector2 point)
-    {
-        var a = new Vector2(-1, -1);
-        var b = new Vector3(1, 1);
-        return ((b.x - a.x) * (point.y - a.y) - (b.y - a.y) * (point.x - a.x)) > 0;
     }
 
     private void Update()
-    {  
+    {
+        //Check our mouse position
+        Vector3 lookAwayFromPlayer = (transform.position - Player.transform.position).normalized;
+        float rot_z = Mathf.Atan2(lookAwayFromPlayer.y, lookAwayFromPlayer.x) * Mathf.Rad2Deg;
+        var isMouseRightSide = -90 <= rot_z && rot_z <= 90;
+
+        //Make gun lookaway from player 
+        var addedRotation = isMouseRightSide ? currentGunRecoil : -currentGunRecoil; 
+        transform.rotation = Quaternion.Euler(0f, 0f, rot_z + addedRotation);
+        if (Math.Abs( transform.rotation.z - 90) < 5)
+        {
+            transform.rotation = Quaternion.Euler(0f, 0f, rot_z );
+        }
+
+
         //MOVE AROUND PLAYER
         //https://stackoverflow.com/questions/57593968/restricting-cursor-to-a-radius-around-my-player
         var _center = new Vector2(Player.transform.position.x, Player.transform.position.y);
         Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        cursorPos.y += currentRecoil / 10;
+        cursorPos.y += circleRecoil / 10;
         Vector2 playerToCursor = cursorPos - _center;
-        Vector2 dir = playerToCursor.normalized; 
+        Vector2 dir = playerToCursor.normalized;
         Vector2 cursorVector = dir * WeaponRadius;
         transform.position = _center + cursorVector;
 
-        //Make gun look away
-        Vector3 lookAwayFromPlayer = (transform.position - Player.transform.position).normalized;
-        float rot_z = Mathf.Atan2(lookAwayFromPlayer.y, lookAwayFromPlayer.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, rot_z + currentRecoil);
-
         //Flip player && weapon
-        if (-90 <= rot_z && rot_z <= 90)
+        if (isMouseRightSide)
         {
             GunSpriteRenderer.flipY = false;
-            PlayerSriteRenderer.flipX = false; 
+            PlayerSriteRenderer.flipX = false;
         }
         else
         {
             GunSpriteRenderer.flipY = true;
             PlayerSriteRenderer.flipX = true;
         }
-         
+
         //Shoot
         if (Input.GetMouseButton(0) && Time.time >= shootAgainTime && currentBullets > 0 && !isRealoding)
         {
@@ -140,31 +137,44 @@ public class GunControll : MonoBehaviour
             currentBullets -= 1;
             UpdateBulletSlotsInterface();
 
-            GameObject bullet = Instantiate(BulletPrefab, BulletSpawn.transform.position, transform.rotation);
+            currentGunRecoil += 100 / Recoil; 
+            if (currentGunRecoil > Recoil && Math.Abs(transform.rotation.z - 90) < 5)
+            {
+                currentGunRecoil = resetRecoilTime;
+            }
+            circleRecoil += 1000 / Recoil;
+            resetRecoilTime = Time.time + 1 / AttackSpeed;
+
+            
+            Vector2 direction = (BulletSpawn.transform.position - transform.position).normalized;
+            GameObject bullet = Instantiate(BulletPrefab, BulletSpawn.transform.position, Quaternion.identity);
             bullet.transform.parent = null;
             bullet.GetComponent<Bullet>()
-                .Init(lookAwayFromPlayer, BulletSpawn, BulletSpeed, BulletSize, DamageMultipliers, AttackRange);
+                .Init(direction, BulletSpawn, BulletSpeed, BulletSize, DamageMultipliers, AttackRange);
 
-            currentRecoil += 100 / Recoil;
-            resetRecoilTime = Time.time + 2 / AttackSpeed;
         }
-        
+
         //Recoil logic
-        if (Time.time >= resetRecoilTime )
+        if (Time.time >= resetRecoilTime)
         {
-            currentRecoil -= 10 / Recoil;
-            if (currentRecoil < 0)
+            currentGunRecoil -= 10 / Recoil;
+            if (currentGunRecoil < 0)
             {
-                currentRecoil = 0f;
+                currentGunRecoil = 0f;
             }
+        }
+        circleRecoil -= 100 / Recoil;
+        if (circleRecoil < 0)
+        {
+            circleRecoil = 0f;
         }
 
         //Reload
         if (Input.GetKey(KeyCode.R) && !isRealoding)
         {
             isRealoding = true;
-            StartCoroutine("Reload"); 
-        }  
+            StartCoroutine("Reload");
+        }
     }
 
     public void UpdateBulletSlotsInterface()
@@ -173,7 +183,7 @@ public class GunControll : MonoBehaviour
     }
 
     private IEnumerator Reload()
-    { 
+    {
         yield return new WaitForSeconds(ReloadTime);
         currentBullets = MaxBullets;
         isRealoding = false;

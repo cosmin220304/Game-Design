@@ -330,12 +330,12 @@ MonoBehaviour:
   BulletSlots: 55
   BulletSize: 1
   AttackSpeed: 1.5
-  AttackRange: 2
+  AttackRange: 0.3
   MaxBullets: 55
   ReloadTime: 2
   Recoil: 15
   bulletSlotsText: {fileID: 770765982}
-  WeaponRadius: 2.5
+  WeaponRadius: 1.5
   Player: {fileID: 1227379817}
   BulletSpawn: {fileID: 1146672724}
   BulletPrefab: {fileID: 6955750510951982762, guid: 991f557ab5971bd4daad41b52cb338e0, type: 3}
@@ -556,8 +556,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 565064580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31, y: 0.22, z: 0.9538233}
-  m_LocalScale: {x: 0.52286315, y: 0.52286315, z: 0.52286315}
+  m_LocalPosition: {x: 0.5899, y: 0.22, z: 0.9538233}
+  m_LocalScale: {x: 1.0242848, y: 0.66006243, z: 0.66006243}
   m_Children:
   - {fileID: 1146672725}
   m_Father: {fileID: 155574980}
@@ -603,7 +603,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 136fdaf77c477da4083a9c4b7eab8525, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4f09381f7f592064fbcfe00895d43505, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -949,7 +949,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1146672724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7800001, y: 0.35000002, z: 0}
+  m_LocalPosition: {x: 1.124, y: 0.007, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 565064581}
