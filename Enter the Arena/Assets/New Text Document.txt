@@ -1,0 +1,15 @@
+todo: 
+bullet effects  
+recoil
+push_back
+switch speed
+ 
+
+done:
+bullets slots
+bullet speed
+bullet damage_mult
+bullet size
+attack speed
+range
+reaload time
