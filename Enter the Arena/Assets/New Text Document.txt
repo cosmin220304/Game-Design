@@ -1,11 +1,11 @@
 todo: 
 bullet effects  
-recoil
 push_back
 switch speed
  
 
 done:
+recoil
 bullets slots
 bullet speed
 bullet damage_mult

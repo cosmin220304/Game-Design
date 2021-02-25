@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
         else if ((Sr.flipX == true && moveHorizontal > 0) || (Sr.flipX == false && moveHorizontal < 0))
         {
             anim.SetInteger("moving", -1);
-            currentSpeed = Speed / 2;
+            currentSpeed = 2 * Speed / 3;
         }
         else if (moveVertical != 0)
         {

@@ -151,7 +151,6 @@ public class GunControll : MonoBehaviour
             bullet.transform.parent = null;
             bullet.GetComponent<Bullet>()
                 .Init(direction, BulletSpawn, BulletSpeed, BulletSize, DamageMultipliers, AttackRange);
-
         }
 
         //Recoil logic

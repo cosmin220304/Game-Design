@@ -26,11 +26,6 @@ public class Bullet : MonoBehaviour
         transform.localScale *= Size;
     }
 
-    private void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (Time.time >= destroyTimer)
