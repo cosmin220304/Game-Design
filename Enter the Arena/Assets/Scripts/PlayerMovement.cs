@@ -17,22 +17,25 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxisRaw("Horizontal") * currentSpeed;
-        float moveVertical = Input.GetAxisRaw("Vertical") * currentSpeed;
-
+        float moveHorizontal = Input.GetAxis("Horizontal") * currentSpeed;
+        float moveVertical = Input.GetAxis("Vertical") * currentSpeed;
         rb2d.velocity = new Vector2(moveHorizontal, moveVertical);
+        AnimatePlayer();
+    }
 
-        if ( (Sr.flipX == false && moveHorizontal > 0) || (Sr.flipX == true && moveHorizontal < 0))
+    void AnimatePlayer()
+    {
+        if ( (Sr.flipX == false && rb2d.velocity.x > 0.01f) || (Sr.flipX == true && rb2d.velocity.x < -0.01f))
         {
             anim.SetInteger("moving", 1);
             currentSpeed = Speed;
         }
-        else if ((Sr.flipX == true && moveHorizontal > 0) || (Sr.flipX == false && moveHorizontal < 0))
+        else if ((Sr.flipX == true && rb2d.velocity.x > 0.01f) || (Sr.flipX == false && rb2d.velocity.x < -0.01f))
         {
             anim.SetInteger("moving", -1);
             currentSpeed = 2 * Speed / 3;
         }
-        else if (moveVertical != 0)
+        else if (rb2d.velocity.y != 0)
         {
             anim.SetInteger("moving", 1);
             currentSpeed = Speed;

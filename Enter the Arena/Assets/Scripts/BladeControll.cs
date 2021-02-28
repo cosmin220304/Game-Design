@@ -3,12 +3,13 @@ using System;
 
 public class BladeControll : MonoBehaviour
 {
-    //Upgradables
+    [Header("Upgradables")]
     public float[] DamageMultipliers;
     public float BladeSpeed = 0;
     public float BladeSize = 0; 
     public float AttackRange = 0;
 
+    [Header("Components")]
     public float WeaponRadius = 2.5f;
     public GameObject Player;
     public SpriteRenderer PlayerSriteRenderer, GunSpriteRenderer;
@@ -27,6 +28,7 @@ public class BladeControll : MonoBehaviour
 
     private void Update()
     {
+        //Change size
         transform.localScale = BladeSize * initialSize;
 
         //Check our mouse position
@@ -58,9 +60,9 @@ public class BladeControll : MonoBehaviour
             PlayerSriteRenderer.flipX = true;
         }
 
+        //Knife attack
         if (Time.time >= goForwardTime && hasComeBack)
         {
-            //Shoot
             if (Input.GetMouseButton(0))
             {
                 hasComeBack = false;
@@ -82,9 +84,12 @@ public class BladeControll : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, WeaponRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, AttackRange);
     }
 }

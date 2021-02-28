@@ -2,48 +2,48 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    //Upgradables
     public float Speed = 0;
-    public float Size = 0;
-    public float Damage = 1; 
-
-    public Vector2 Direction = Vector2.zero;
-    public GameObject SpawnPoint;
-
-    private float destroyTimer = Mathf.Infinity;
+    public float Damage = 0;
+    private float AttackRange = 0;
+    private Vector2? Direction = null;
+    private GameObject SpawnPoint = null; 
 
     public void Init(Vector3 direction, GameObject spawnPoint, float speed, float size, float[] damageMultiplier, float attackRange) 
     {
         Direction = direction;
         Speed = speed;
-        Size = size;
-        SpawnPoint = spawnPoint;  
+        transform.localScale *= size;
         foreach (var d in damageMultiplier)
         {
             Damage *= d;
         }
-        destroyTimer = Time.time + attackRange;
-        transform.localScale *= Size;
+        SpawnPoint = spawnPoint;  
+        AttackRange = attackRange;
     }
 
     void Update()
     {
-        if (Time.time >= destroyTimer)
+        if (Direction == null)
+        {
+            Debug.Log("ASdasd");
+            return;
+        }
+
+        if (Vector2.Distance(SpawnPoint.transform.position, transform.position) > AttackRange)
         {
             Destroy(this.gameObject);
         }
-
-        transform.Translate((Direction * Speed * Time.deltaTime));
+        transform.Translate((Direction.Value * Speed * Time.deltaTime));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var bulletScript = collision.GetComponent<Bullet>();
-        if (bulletScript && bulletScript.SpawnPoint == SpawnPoint)
+        if (bulletScript?.SpawnPoint == SpawnPoint)
         {
             return;
         }
+
         Destroy(this.gameObject);
     }
-
 }
