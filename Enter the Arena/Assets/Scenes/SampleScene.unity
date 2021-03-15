@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 150944863}
   m_Layer: 3
   m_Name: Circle (4)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -497,7 +497,7 @@ GameObject:
   - component: {fileID: 182697110}
   m_Layer: 3
   m_Name: Circle (1)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 246908206}
   m_Layer: 3
   m_Name: Circle (5)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1027,7 +1027,7 @@ GameObject:
   - component: {fileID: 507492519}
   m_Layer: 3
   m_Name: rt (8)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1136,7 +1136,7 @@ GameObject:
   - component: {fileID: 511304041}
   m_Layer: 3
   m_Name: rt (5)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1241,9 +1241,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 527951197}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1275,7 +1275,7 @@ GameObject:
   - component: {fileID: 531751307}
   m_Layer: 3
   m_Name: Circle (2)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1374,7 +1374,7 @@ GameObject:
   - component: {fileID: 545573657}
   m_Layer: 3
   m_Name: Circle (3)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1631,7 +1631,7 @@ GameObject:
   - component: {fileID: 619447326}
   m_Layer: 3
   m_Name: rt (4)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2124,7 +2124,7 @@ GameObject:
   - component: {fileID: 780617615}
   m_Layer: 3
   m_Name: rt (2)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2233,7 +2233,7 @@ GameObject:
   - component: {fileID: 828339371}
   m_Layer: 3
   m_Name: rt (7)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2523,9 +2523,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1052522665}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2747,12 +2747,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d29ae10c28bbd42aa4e2e5344b6545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceAway: 10
-  target: {fileID: 1227379822}
-  speed: 400
-  nextWaypointDistance: 3
+  DistanceAway: 15
+  RetreatDistance: 9
+  Target: {fileID: 1227379822}
+  Speed: 5
+  NextWaypointDistance: 3
   Sr: {fileID: 1746205896}
-  anim: {fileID: 1746205897}
+  Anim: {fileID: 1746205897}
+  weapon: {fileID: 0}
 --- !u!1 &1178038318
 GameObject:
   m_ObjectHideFlags: 0
@@ -2766,7 +2768,7 @@ GameObject:
   - component: {fileID: 1178038321}
   m_Layer: 3
   m_Name: rt (9)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3054,7 +3056,7 @@ GameObject:
   - component: {fileID: 1300881385}
   m_Layer: 3
   m_Name: rt (6)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3163,7 +3165,7 @@ GameObject:
   - component: {fileID: 1317048931}
   m_Layer: 3
   m_Name: Circle (1)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3487,12 +3489,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d29ae10c28bbd42aa4e2e5344b6545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceAway: 0
-  target: {fileID: 1227379822}
-  speed: 400
-  nextWaypointDistance: 3
+  DistanceAway: 0
+  RetreatDistance: 0
+  Target: {fileID: 1227379822}
+  Speed: 5
+  NextWaypointDistance: 3
   Sr: {fileID: 950901777}
-  anim: {fileID: 950901775}
+  Anim: {fileID: 950901775}
+  weapon: {fileID: 0}
 --- !u!61 &1466265023
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3576,7 +3580,7 @@ GameObject:
   - component: {fileID: 1499011227}
   m_Layer: 3
   m_Name: Circle (2)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3675,7 +3679,7 @@ GameObject:
   - component: {fileID: 1588125784}
   m_Layer: 3
   m_Name: rt
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4042,7 +4046,7 @@ GameObject:
   - component: {fileID: 1756396368}
   m_Layer: 3
   m_Name: rt (3)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4191,12 +4195,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d29ae10c28bbd42aa4e2e5344b6545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceAway: 10
-  target: {fileID: 1227379822}
-  speed: 400
-  nextWaypointDistance: 3
+  DistanceAway: 15
+  RetreatDistance: 9
+  Target: {fileID: 1227379822}
+  Speed: 5
+  NextWaypointDistance: 3
   Sr: {fileID: 1349579464}
-  anim: {fileID: 1349579462}
+  Anim: {fileID: 1349579462}
+  weapon: {fileID: 0}
 --- !u!61 &1776381909
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4363,7 +4369,7 @@ GameObject:
   - component: {fileID: 1927153987}
   m_Layer: 3
   m_Name: Circle
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4462,7 +4468,7 @@ GameObject:
   - component: {fileID: 1947118710}
   m_Layer: 3
   m_Name: Circle (1)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4673,7 +4679,7 @@ GameObject:
   - component: {fileID: 2103816190}
   m_Layer: 3
   m_Name: rt (1)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
