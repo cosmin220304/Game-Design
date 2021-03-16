@@ -1,6 +1,6 @@
 # Game-Design
 
-##Design document:  
+## Design document:  
 https://docs.google.com/document/d/1MAc6ya15bKi7JgcsR9kRaZDjs0qRC_gVWqwdrWYwQIc/edit
 
 Week1:      
