@@ -3,12 +3,14 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - BladeControll
     - Bullet
+    - CameraFollow
     - EnemyBladeControll
     - EnemyGunControll
     - EnemyMovement
     - GunControll
     - PixelBoy
     - PlayerMovement
+    - RightPart
     AstarPathfindingProject.dll:
     - AstarPath
     - Pathfinding.Seeker
@@ -90,6 +92,8 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 640}
+    - Class: 114
       Script: {instanceID: 1526}
     - Class: 114
       Script: {instanceID: 1552}
@@ -122,15 +126,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3570}
     - Class: 114
-      Script: {instanceID: 3700}
+      Script: {instanceID: 3626}
     - Class: 114
-      Script: {instanceID: 4440}
+      Script: {instanceID: 3702}
     - Class: 114
-      Script: {instanceID: 4784}
+      Script: {instanceID: 4174}
     - Class: 114
-      Script: {instanceID: 5080}
+      Script: {instanceID: 4444}
     - Class: 114
-      Script: {instanceID: 5168}
+      Script: {instanceID: 4788}
+    - Class: 114
+      Script: {instanceID: 5084}
+    - Class: 114
+      Script: {instanceID: 5172}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -148,6 +156,14 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 19719996
+      Script: {instanceID: 0}
+    - Class: 156049354
+      Script: {instanceID: 0}
+    - Class: 483693784
+      Script: {instanceID: 0}
+    - Class: 1839735485
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -584,7 +600,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: 508ab3d46d2b142029c054b9220de3b0
+      Hash: 216b156e1ffc56bfaaab6561e50ef5a5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyMovement
@@ -606,6 +622,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: PlayerQuitHandler
+  - hash:
+      serializedVersion: 2
+      Hash: bef5bc67029dbbbb64eb2af84a1605ba
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RightPart
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -720,6 +742,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Mask
+  - hash:
+      serializedVersion: 2
+      Hash: 131968ed29c99ff2ac4f7a89d69bbd4c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CameraFollow
   - hash:
       serializedVersion: 2
       Hash: 523ce309f50d9eee6a8fc0e2f86c9c97
