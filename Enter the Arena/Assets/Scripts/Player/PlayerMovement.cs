@@ -8,11 +8,13 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb2d;
     private float currentSpeed;
+    private UiController uiController;
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         currentSpeed = Speed;
+        uiController = FindObjectOfType<UiController>();
     }
 
     void FixedUpdate()
@@ -21,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical") * currentSpeed;
         rb2d.velocity = new Vector2(moveHorizontal, moveVertical);
         AnimatePlayer();
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            uiController.TogglePause();
+        }
     }
 
     void AnimatePlayer()

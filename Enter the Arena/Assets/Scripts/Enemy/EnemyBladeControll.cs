@@ -18,10 +18,15 @@ public class EnemyBladeControll : MonoBehaviour
     private float currentWeaponRadius;
     private bool hasComeBack = true;
     private Vector3 initialSize;
+    private float damage;
 
     private void Start()
     {
-        DamageMultipliers = new float[] { 1 };
+        damage = 10;
+        foreach(var d in DamageMultipliers)
+        {
+            damage *= 10;
+        }
         currentWeaponRadius = WeaponRadius;
         initialSize = transform.localScale;
     }
@@ -79,6 +84,14 @@ public class EnemyBladeControll : MonoBehaviour
                 hasComeBack = true;
             }
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            collision.GetComponent<IEntityHp>().DealDamage(damage);
+        }
+
     }
 
     void OnDrawGizmos()

@@ -71,53 +71,54 @@ public class EnemyGunControll : MonoBehaviour
             PlayerSriteRenderer.flipX = true;
         }
 
-        ////Shoot
-        //if (Input.GetMouseButton(0) && Time.time >= shootAgainTime && currentBullets > 0 && !isRealoding)
-        //{
-        //    shootAgainTime = Time.time + 1 / AttackSpeed;
-        //    currentBullets -= 1;
-        //    UpdateBulletSlotsInterface();
+        //Shoot
+        RaycastHit2D hit = Physics2D.Linecast(Enemy.transform.position, Target.transform.position);
+        bool canSeePlayer = hit.collider != null && hit.transform.gameObject == Target.gameObject;
+        if (canSeePlayer && Time.time >= shootAgainTime && currentBullets > 0 && !isRealoding)
+        {
+            shootAgainTime = Time.time + 1 / AttackSpeed;
+            currentBullets -= 1;
 
-        //    if (hasRecoil)
-        //    {
-        //        currentGunRecoil += 100 / Recoil;
-        //        if (currentGunRecoil > Recoil && Math.Abs(transform.rotation.z - 90) < 5)
-        //        {
-        //            currentGunRecoil = resetRecoilTime;
-        //        }
-        //        circleRecoil += 1000 / Recoil;
-        //        resetRecoilTime = Time.time + 1 / AttackSpeed;
-        //    }
+            if (hasRecoil)
+            {
+                currentGunRecoil += 100 / Recoil;
+                if (currentGunRecoil > Recoil && Math.Abs(transform.rotation.z - 90) < 5)
+                {
+                    currentGunRecoil = resetRecoilTime;
+                }
+                circleRecoil += 1000 / Recoil;
+                resetRecoilTime = Time.time + 1 / AttackSpeed;
+            }
 
-        //    Vector2 direction = (BulletSpawn.transform.position - transform.position).normalized;
-        //    GameObject bullet = Instantiate(BulletPrefab, BulletSpawn.transform.position, Quaternion.identity);
-        //    bullet.transform.parent = null;
-        //    bullet.GetComponent<Bullet>()
-        //        .Init(direction, BulletSpawn, BulletSpeed, BulletSize, DamageMultipliers, AttackRange);
-        //}
+            Vector2 direction = (BulletSpawn.transform.position - transform.position).normalized;
+            GameObject bullet = Instantiate(BulletPrefab, BulletSpawn.transform.position, Quaternion.identity);
+            bullet.transform.parent = null;
+            bullet.GetComponent<Bullet>()
+                .Init(direction, BulletSpawn, BulletSpeed, BulletSize, DamageMultipliers, AttackRange);
+        }
 
-        //if (hasRecoil)
-        //{
-        //    if (Time.time >= resetRecoilTime)
-        //    {
-        //        currentGunRecoil -= AttackSpeed * 10 / Recoil;
-        //        if (currentGunRecoil < 0)
-        //        {
-        //            currentGunRecoil = 0f;
-        //        }
-        //    }
-        //    circleRecoil -= 100 / Recoil;
-        //    if (circleRecoil < 0)
-        //    {
-        //        circleRecoil = 0f;
-        //    }
-        //}
+        if (hasRecoil)
+        {
+            if (Time.time >= resetRecoilTime)
+            {
+                currentGunRecoil -= AttackSpeed * 10 / Recoil;
+                if (currentGunRecoil < 0)
+                {
+                    currentGunRecoil = 0f;
+                }
+            }
+            circleRecoil -= 100 / Recoil;
+            if (circleRecoil < 0)
+            {
+                circleRecoil = 0f;
+            }
+        }
 
-        ////Reload
-        //if (Input.GetKey(KeyCode.R) && !isRealoding || currentBullets < 1)
-        //{
-        //    StartCoroutine("Reload");
-        //}
+        //Reload
+        if (!isRealoding || currentBullets < 1)
+        {
+            StartCoroutine("Reload");
+        }
     } 
 
     private IEnumerator Reload()

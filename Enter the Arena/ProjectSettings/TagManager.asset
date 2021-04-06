@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Terrain
+  - Blade
   layers:
   - Default
   - TransparentFX
