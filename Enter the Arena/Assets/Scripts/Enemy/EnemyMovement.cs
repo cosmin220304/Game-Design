@@ -136,7 +136,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     { 
-        if (collision.collider.tag == "Player" && !isRetreating)
+        if (collision.collider.tag == "Main Player" && !isRetreating)
         {
             StartCoroutine(Retreat(collision.collider.transform));
         }

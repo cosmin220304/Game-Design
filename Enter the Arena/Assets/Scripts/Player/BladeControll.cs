@@ -1,108 +1,107 @@
 using UnityEngine;
-using System;
 
 public class BladeControll : MonoBehaviour
 {
-    [Header("Upgradables")]
-    public float[] DamageMultipliers;
-    public float BladeSpeed = 0;
-    public float BladeSize = 0; 
-    public float AttackRange = 0;
+  [Header("Upgradables")]
+  public float[] DamageMultipliers;
+  public float BladeSpeed = 0;
+  public float BladeSize = 0;
+  public float AttackRange = 0;
 
-    [Header("Components")]
-    public float WeaponRadius = 2.5f;
-    public GameObject Player;
-    public SpriteRenderer PlayerSriteRenderer, GunSpriteRenderer;
+  [Header("Components")]
+  public float WeaponRadius = 2.5f;
+  public GameObject Player;
+  public SpriteRenderer PlayerSriteRenderer, GunSpriteRenderer;
 
-    private float goForwardTime = 0;
-    private float currentWeaponRadius;
-    private bool hasComeBack = true;
-    private Vector3 initialSize;
-    private float damage;
+  private float goForwardTime = 0;
+  private float currentWeaponRadius;
+  private bool hasComeBack = true;
+  private Vector3 initialSize;
+  private float damage;
 
-    private void Start()
+  private void Start()
+  {
+    damage = 10;
+    foreach (var d in DamageMultipliers)
     {
-        damage = 10;
-        foreach(var d in DamageMultipliers)
-        {
-            damage *= d;
-        }
+      damage *= d;
+    }
+    currentWeaponRadius = WeaponRadius;
+    initialSize = transform.localScale;
+  }
+
+  private void Update()
+  {
+    //Change size
+    transform.localScale = BladeSize * initialSize;
+
+    //Check our mouse position
+    Vector3 lookAwayFromPlayer = (transform.position - Player.transform.position).normalized;
+    float rot_z = Mathf.Atan2(lookAwayFromPlayer.y, lookAwayFromPlayer.x) * Mathf.Rad2Deg;
+    var isMouseRightSide = -90 <= rot_z && rot_z <= 90;
+
+    //Make gun lookaway from player 
+    transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+
+    //MOVE AROUND PLAYER
+    //https://stackoverflow.com/questions/57593968/restricting-cursor-to-a-radius-around-my-player
+    var _center = new Vector2(Player.transform.position.x, Player.transform.position.y);
+    Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    Vector2 playerToCursor = cursorPos - _center;
+    Vector2 dir = playerToCursor.normalized;
+    Vector2 cursorVector = dir * currentWeaponRadius;
+    transform.position = _center + cursorVector;
+
+    //Flip player && weapon
+    if (isMouseRightSide)
+    {
+      GunSpriteRenderer.flipY = false;
+      PlayerSriteRenderer.flipX = false;
+    }
+    else
+    {
+      GunSpriteRenderer.flipY = true;
+      PlayerSriteRenderer.flipX = true;
+    }
+
+    //Knife attack
+    if (Time.time >= goForwardTime && hasComeBack)
+    {
+      if (Input.GetMouseButton(0))
+      {
+        hasComeBack = false;
+        goForwardTime = Time.time + AttackRange / 10;
+      }
+    }
+    else if (Time.time < goForwardTime)
+    {
+      currentWeaponRadius += Time.deltaTime * BladeSpeed * 10;
+    }
+    else if (!hasComeBack)
+    {
+      currentWeaponRadius -= Time.deltaTime * BladeSpeed * 10;
+      if (currentWeaponRadius < WeaponRadius)
+      {
         currentWeaponRadius = WeaponRadius;
-        initialSize = transform.localScale;
+        hasComeBack = true;
+      }
     }
+  }
 
-    private void Update()
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    if (collision.tag == "Player")
     {
-        //Change size
-        transform.localScale = BladeSize * initialSize;
-
-        //Check our mouse position
-        Vector3 lookAwayFromPlayer = (transform.position - Player.transform.position).normalized;
-        float rot_z = Mathf.Atan2(lookAwayFromPlayer.y, lookAwayFromPlayer.x) * Mathf.Rad2Deg;
-        var isMouseRightSide = -90 <= rot_z && rot_z <= 90;
-
-        //Make gun lookaway from player 
-        transform.rotation = Quaternion.Euler(0f, 0f, rot_z); 
-
-        //MOVE AROUND PLAYER
-        //https://stackoverflow.com/questions/57593968/restricting-cursor-to-a-radius-around-my-player
-        var _center = new Vector2(Player.transform.position.x, Player.transform.position.y);
-        Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 playerToCursor = cursorPos - _center;
-        Vector2 dir = playerToCursor.normalized;
-        Vector2 cursorVector = dir * currentWeaponRadius;
-        transform.position = _center + cursorVector;
-
-        //Flip player && weapon
-        if (isMouseRightSide)
-        {
-            GunSpriteRenderer.flipY = false;
-            PlayerSriteRenderer.flipX = false;
-        }
-        else
-        {
-            GunSpriteRenderer.flipY = true;
-            PlayerSriteRenderer.flipX = true;
-        }
-
-        //Knife attack
-        if (Time.time >= goForwardTime && hasComeBack)
-        {
-            if (Input.GetMouseButton(0))
-            {
-                hasComeBack = false;
-                goForwardTime = Time.time + AttackRange / 10;
-            }
-        }
-        else if (Time.time < goForwardTime)
-        {
-            currentWeaponRadius += Time.deltaTime * BladeSpeed * 10; 
-        }
-        else if (!hasComeBack)
-        {
-            currentWeaponRadius -= Time.deltaTime * BladeSpeed * 10;
-            if (currentWeaponRadius < WeaponRadius)
-            {
-                currentWeaponRadius = WeaponRadius;
-                hasComeBack = true;
-            }
-        }
+      collision.GetComponent<IEntityHp>().DealDamage(damage);
     }
+  }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            collision.GetComponent<IEntityHp>().DealDamage(damage);
-        }
-    }
+  void OnDrawGizmos()
+  {
+    Gizmos.color = Color.green;
+    Gizmos.DrawWireSphere(transform.position, WeaponRadius);
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, WeaponRadius);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, AttackRange);
-    }
+    Gizmos.color = Color.red;
+    Gizmos.DrawWireSphere(transform.position, AttackRange);
+  }
 }
