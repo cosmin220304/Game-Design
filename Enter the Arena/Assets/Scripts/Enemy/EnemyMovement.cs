@@ -2,24 +2,18 @@ using UnityEngine;
 using Pathfinding;
 using System.Collections;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : IMovement
 {
   public float DistanceAway;
   public float RetreatDistance;
-  public Transform Target;
-  public float Speed = 5f;
   public float NextWaypointDistance = 3f;
-  public SpriteRenderer Sr;
-  public Animator Anim;
   public GameObject weapon;
 
+  private Transform Target;
   private Seeker seeker;
   private Path path;
-  private Rigidbody2D rb2d;
   private int currentWayPoint = 0;
-  private float currentSpeed;
   private float currentDistanceAway;
-  private bool isRetreating;
 
   void Start()
   {
@@ -27,6 +21,8 @@ public class EnemyMovement : MonoBehaviour
     rb2d = GetComponent<Rigidbody2D>();
     isRetreating = false;
     InvokeRepeating("UpdatePath", 0f, .5f);
+    initialSpeed = Speed;
+    Target = GameObject.FindGameObjectWithTag("Main Player").transform;
   }
 
   void UpdatePath()
@@ -108,30 +104,6 @@ public class EnemyMovement : MonoBehaviour
     yield return new WaitForSeconds(Random.Range(1, 3));
     Target = tempTarget;
     isRetreating = false;
-  }
-
-  void AnimatePlayer()
-  {
-    if ((Sr.flipX == false && rb2d.velocity.x > 0.01f) || (Sr.flipX == true && rb2d.velocity.x < -0.01f))
-    {
-      Anim.SetInteger("moving", 1);
-      currentSpeed = Speed;
-    }
-    else if ((Sr.flipX == true && rb2d.velocity.x > 0.01f) || (Sr.flipX == false && rb2d.velocity.x < -0.01f))
-    {
-      Anim.SetInteger("moving", -1);
-      currentSpeed = 2 * Speed / 3;
-    }
-    else if (rb2d.velocity.y != 0)
-    {
-      Anim.SetInteger("moving", 1);
-      currentSpeed = Speed;
-    }
-    else
-    {
-      Anim.SetInteger("moving", 0);
-      currentSpeed = Speed;
-    }
   }
 
   private void OnCollisionEnter2D(Collision2D collision)

@@ -47,6 +47,8 @@ public class Bullet : MonoBehaviour
     BulletEffect = bulletEffect;
     BulletNumber = bulletNumber;
 
+    this.transform.tag = "Bullet";
+
     InitBulletType();
     InitBulletEffect();
   }
@@ -66,8 +68,20 @@ public class Bullet : MonoBehaviour
     }
   }
 
+  private void OnTriggerStay2D(Collider2D collision)
+  {
+    if (ShouldIgnore(collision)) return;
+
+    if (!noDamage && tick % 10 == 0)
+    {
+      DealDamage(collision);
+    }
+  }
+
   void Update()
   {
+    tick += 0.5f;
+
     if (Direction == null)
     {
       return;
@@ -142,8 +156,7 @@ public class Bullet : MonoBehaviour
     {
       DestroyBullet();
     }
-
-    tick += 0.5f;
+     
     var direction = new Vector2();
     direction.x = Direction.x;
 
@@ -174,8 +187,15 @@ public class Bullet : MonoBehaviour
 
     if (ClosestEnemy == null)
     {
-      transform.Translate(Direction * Speed * Time.deltaTime);
-      return;
+      if (BulletEffect == BulletEffects.BulletEffect.bee)
+      {
+        GetClosesEnemy();
+        return;
+      }
+      else
+      {
+        DestroyBullet();
+      }
     }
 
     var direction = Direction;
@@ -258,14 +278,17 @@ public class Bullet : MonoBehaviour
 
     foreach (var e in enemies)
     {
-      if (e.name == "Player") continue;
-
       float dist = Vector2.Distance(e.transform.position, transform.position);
       if (dist < minDist)
       {
         ClosestEnemy = e;
         minDist = dist;
       }
+    }
+
+    if (BulletEffect == BulletEffects.BulletEffect.bee && ClosestEnemy == null)
+    {
+      ClosestEnemy = GameObject.FindGameObjectWithTag("Main Player");
     }
   }
 
@@ -286,7 +309,7 @@ public class Bullet : MonoBehaviour
 
     var destroyEffectTimer = 0.5f;
     var destroyBulletTimer = 0f;
-    var byPassLaucher = false;
+    var byPassLaucherEffect = false;
     IEntityHp hpScript = null;
     if (collision != null)
     {
@@ -322,17 +345,22 @@ public class Bullet : MonoBehaviour
         Direction = Direction.Rotate(rotation);
         break;
       case BulletEffects.BulletEffect.ice:
+        if (!hpScript) break;
+        collision.GetComponent<IMovement>().AddEffect(PlayerEffects.PlayerEffect.Freeze, 1f);
+        break;
       case BulletEffects.BulletEffect.bee:
-        destroyBulletTimer = 3f;
+        destroyBulletTimer = AttackRange/10;
         var rrotation = Random.Range(-90, 90);
         Direction = Direction.Rotate(rrotation);
-        byPassLaucher = true;
+        byPassLaucherEffect = true;
+        if (!hpScript) break;
+        collision.GetComponent<IMovement>().AddEffect(PlayerEffects.PlayerEffect.Fear, 0.5f);
         break;
       default:
         break;
     }
 
-    if (BulletType == BulletTypes.BulletType.Launcher && !byPassLaucher)
+    if (BulletType == BulletTypes.BulletType.Launcher && !byPassLaucherEffect)
     {
       SpawnExplosion(true);
     }
@@ -364,12 +392,17 @@ public class Bullet : MonoBehaviour
       return true;
     }
 
-    if (Origin.CompareTag(collision.tag))
+    if (Origin.CompareTag(collision.tag) && BulletEffect != BulletEffects.BulletEffect.bee)
     {
       return true;
     }
 
     if (collision.tag == "Water")
+    {
+      return true;
+    }
+
+    if (collision.tag == "Bullet")
     {
       return true;
     }

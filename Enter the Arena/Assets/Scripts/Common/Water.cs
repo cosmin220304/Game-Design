@@ -9,36 +9,9 @@ public class Water : MonoBehaviour
     if (collision.transform.tag.Contains("Player"))
     {
       SpawnParticles(collision);
-      var enemyMov = collision.GetComponent<EnemyMovement>();
-      var playerMov = collision.GetComponent<PlayerMovement>();
-      if (enemyMov)
-      {
-        enemyMov.Speed /= 2; 
-      }
-      else if (playerMov)
-      {
-        playerMov.Speed /= 2;
-      }
+      collision.GetComponent<IMovement>()?.AddEffect(PlayerEffects.PlayerEffect.Slow, 1);
     }
-  }
-
-  private void OnTriggerExit2D(Collider2D collision)
-  {
-    if (collision.transform.tag.Contains("Player"))
-    {
-      SpawnParticles(collision);
-      var enemyMov = collision.GetComponent<EnemyMovement>();
-      var playerMov = collision.GetComponent<PlayerMovement>();
-      if (enemyMov)
-      {
-        enemyMov.Speed *= 2;
-      }
-      else if (playerMov)
-      {
-        playerMov.Speed *= 2;
-      }
-    }
-  }
+  } 
 
   void SpawnParticles(Collider2D collision)
   {

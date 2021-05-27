@@ -5,8 +5,9 @@ public static class PlayerEffects
     None = 0,
     Realoding,
     Slow,
-    Fear,
-    Charm,
+    Fear, 
+    Freeze,
+    Silence,
   }
 }
 

@@ -24,19 +24,26 @@ public class EnemyGunControll : MonoBehaviour
   public GameObject BulletPrefab;
   public SpriteRenderer PlayerSriteRenderer, GunSpriteRenderer;
 
-  private bool isRealoding = false;
-  private float currentBullets = 0;
-  private float shootAgainTime = 0;
-  private float currentGunRecoil = 0;
-  private float resetRecoilTime = 0;
-  private float circleRecoil = 0;
-  private bool hasRecoil;
+  [SerializeField] private bool isRealoding;
+  [SerializeField] private float currentBullets = 0;
+  [SerializeField] private float shootAgainTime = 0;
+  [SerializeField] private float currentGunRecoil = 0;
+  [SerializeField] private float resetRecoilTime = 0;
+  [SerializeField] private float circleRecoil = 0;
+  [SerializeField] private bool hasRecoil;
+  [SerializeField] private IMovement movementScript;
 
   private void Start()
   {
+    Target = GameObject.FindGameObjectWithTag("Main Player");
+    movementScript = this.transform.parent.GetComponent<IMovement>();
     DamageMultipliers = new float[] { 1 };
     currentBullets = BulletSlots;
     isRealoding = false;
+    shootAgainTime = 0;
+    currentGunRecoil = 0;
+    resetRecoilTime = 0;
+    circleRecoil = 0;
   }
 
   private void Update()
@@ -51,7 +58,17 @@ public class EnemyGunControll : MonoBehaviour
 
     //Make gun lookaway from player 
     var addedRotation = isMouseRightSide ? currentGunRecoil : -currentGunRecoil;
-    transform.rotation = Quaternion.Euler(0f, 0f, rot_z + addedRotation);
+
+    var offset = 0;
+    if (Target.transform.position.y - transform.parent.position.y < 2)
+    {
+      offset = -30;
+    }
+    else if (Target.transform.position.y < transform.parent.position.y)
+    {
+      offset = -5;
+    }
+    transform.rotation = Quaternion.Euler(0f, 0f, rot_z + addedRotation + offset);
     if (Math.Abs(transform.rotation.z - 90) < 5)
     {
       transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
@@ -76,9 +93,10 @@ public class EnemyGunControll : MonoBehaviour
     }
 
     //Shoot
-    var ignoreLayers = ~(LayerMask.GetMask("Water"));
+    var ignoreLayers = ~(LayerMask.GetMask("Water") | LayerMask.GetMask("Player"));
     RaycastHit2D hit = Physics2D.Linecast(Enemy.transform.position, Target.transform.position, ignoreLayers);
-    bool canSeePlayer = hit.collider != null && hit.transform.gameObject == Target.gameObject;
+    bool canSeePlayer = hit.transform.tag == "Main Player";
+
     if (canSeePlayer && Time.time >= shootAgainTime && currentBullets > 0 && !isRealoding)
     {
       shootAgainTime = Time.time + 1 / AttackSpeed;
@@ -138,9 +156,10 @@ public class EnemyGunControll : MonoBehaviour
     }
 
     //Reload
-    if (!isRealoding || currentBullets < 1)
+    if (!isRealoding && currentBullets < 1)
     {
       StartCoroutine("Reload");
+      movementScript.AddEffect(PlayerEffects.PlayerEffect.Realoding, ReloadTime);
     }
   }
 

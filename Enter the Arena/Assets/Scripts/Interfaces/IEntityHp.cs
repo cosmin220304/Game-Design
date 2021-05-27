@@ -5,7 +5,7 @@ public abstract class IEntityHp : MonoBehaviour
 {
   public SpriteRenderer sr;
   public float HP;
-  public GameObject DeathParticlesPrefab;
+  public GameObject DeathParticlesPrefab, FireEffect;
   public Rigidbody2D rb;
   protected bool isTakingDamage;
   protected Color initialColor;
@@ -62,6 +62,7 @@ public abstract class IEntityHp : MonoBehaviour
   {
     currentColor = Color.red;
     isOnFire = true;
+    FireEffect.SetActive(true);
 
     DealDamage(fireDamage);
     yield return new WaitForSeconds(1);
@@ -73,6 +74,7 @@ public abstract class IEntityHp : MonoBehaviour
     yield return new WaitForSeconds(1);
     DealDamage(fireDamage);
 
+    FireEffect.SetActive(false);
     currentColor = initialColor;
     isOnFire = false;
   }

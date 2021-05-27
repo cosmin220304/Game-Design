@@ -50,19 +50,21 @@ public class GunControll : MonoBehaviour
   public GameObject BulletPrefab;
   public SpriteRenderer PlayerSriteRenderer, GunSpriteRenderer;
 
-  private bool isRealoding = false;
-  private float currentBullets = 0;
-  private float shootAgainTime = 0;
-  private float currentGunRecoil = 0;
-  private float resetRecoilTime = 0;
-  private float circleRecoil = 0;
-  private bool hasRecoil;
+  [SerializeField] private bool isRealoding = false;
+  [SerializeField] private float currentBullets = 0;
+  [SerializeField] private float shootAgainTime = 0;
+  [SerializeField] private float currentGunRecoil = 0;
+  [SerializeField] private float resetRecoilTime = 0;
+  [SerializeField] private float circleRecoil = 0;
+  [SerializeField] private bool hasRecoil;
+  [SerializeField] private IMovement movementScript;
 
   private void Start()
   {
     DamageMultipliers = new float[] { 1 };
     currentBullets = BulletSlots;
     UpdateBulletSlotsInterface();
+    movementScript = this.transform.parent.GetComponent<IMovement>();
   }
 
   private void Update()
@@ -171,6 +173,7 @@ public class GunControll : MonoBehaviour
     if (Input.GetKey(KeyCode.R) && !isRealoding || currentBullets < 1)
     {
       StartCoroutine("Reload");
+      movementScript.AddEffect(PlayerEffects.PlayerEffect.Realoding, ReloadTime);
     }
   }
 
