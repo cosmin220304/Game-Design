@@ -1,31 +1,3 @@
-//using UnityEngine;
-
-//public class GunControll : MonoBehaviour
-//{
-//    public int Min, Max;
-//    void Update()
-//    {
-//        //The distance from your player to the camera
-//        float camToPlayerDist = Vector3.Distance(transform.position, Camera.main.transform.position);
-
-//        //This is the world position of your mouse
-//        Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, camToPlayerDist));
-
-//        //The direction your mouse is pointing in with relation to your player
-//        Vector2 direction = mouseWorldPosition - (Vector2)transform.position;
-
-//        //the angle of your direction
-//        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-//        if (Min < angle && angle < Max)
-//        {
-//            //Setting the rotation to the transform.
-//            transform.rotation = Quaternion.Euler(0, 0, angle);
-//        }
-//        Debug.Log(angle);
-//    }
-//}
-
 //public class Target : MonoBehaviour
 //{
 
@@ -95,6 +67,7 @@ public class GunControll : MonoBehaviour
 
   private void Update()
   {
+    if (Time.deltaTime == 0) return;
 
     //Check if you have recoil
     hasRecoil = Recoil != 0;

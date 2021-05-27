@@ -22,10 +22,14 @@ public class PlayerHp : IEntityHp
       uiController.GameOver();
       return;
     }
+    else if (HP > 100)
+    {
+      HP = 100;
+    }
 
     UpdateInterface();
 
-    if (!isTakingDamage)
+    if (!isTakingDamage && damage > 0)
     {
       StartCoroutine("FlashWithDamage");
     }

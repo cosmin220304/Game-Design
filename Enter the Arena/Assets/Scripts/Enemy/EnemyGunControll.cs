@@ -36,6 +36,7 @@ public class EnemyGunControll : MonoBehaviour
   {
     DamageMultipliers = new float[] { 1 };
     currentBullets = BulletSlots;
+    isRealoding = false;
   }
 
   private void Update()
@@ -75,7 +76,8 @@ public class EnemyGunControll : MonoBehaviour
     }
 
     //Shoot
-    RaycastHit2D hit = Physics2D.Linecast(Enemy.transform.position, Target.transform.position);
+    var ignoreLayers = ~(LayerMask.GetMask("Water"));
+    RaycastHit2D hit = Physics2D.Linecast(Enemy.transform.position, Target.transform.position, ignoreLayers);
     bool canSeePlayer = hit.collider != null && hit.transform.gameObject == Target.gameObject;
     if (canSeePlayer && Time.time >= shootAgainTime && currentBullets > 0 && !isRealoding)
     {

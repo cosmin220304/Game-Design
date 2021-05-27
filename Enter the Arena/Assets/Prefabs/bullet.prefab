@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ImpactEffectPrefab: {fileID: 766175410654445375, guid: fdb5a0cef0b86154fa8116e55e208240, type: 3}
+  ExplosionEffectPrefab: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+  WaterPrefab: {fileID: 5068359312207605463, guid: ffb452264ac7f5c41b9d3437a62aa709, type: 3}
   TrailRenderer: {fileID: 383198742086532196}
   BulletSpriteRenderer: {fileID: -7216521783161921862}
 --- !u!50 &761388495999799826

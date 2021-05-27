@@ -8,8 +8,6 @@ public static class BulletEffects
     bomb,
     toxic,
     water,
-    goo,
-    machine_gun,
     ghost,
     electric,
     bee,

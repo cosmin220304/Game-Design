@@ -89,7 +89,7 @@ public class EnemyBladeControll : MonoBehaviour
     {
         if (collision.tag == "Main Player")
         {
-            collision.GetComponent<IEntityHp>().DealDamage(damage);
+            collision.GetComponent<IEntityHp>()?.DealDamage(damage);
         }
     }
 

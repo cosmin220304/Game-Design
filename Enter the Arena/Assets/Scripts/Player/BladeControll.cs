@@ -32,6 +32,8 @@ public class BladeControll : MonoBehaviour
 
   private void Update()
   {
+    if (Time.deltaTime == 0) return;
+
     //Change size
     transform.localScale = BladeSize * initialSize;
 
@@ -92,7 +94,7 @@ public class BladeControll : MonoBehaviour
   {
     if (collision.tag == "Player")
     {
-      collision.GetComponent<IEntityHp>().DealDamage(damage);
+      collision.GetComponent<IEntityHp>()?.DealDamage(damage);
     }
   }
 

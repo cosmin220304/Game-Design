@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-  public GameObject ImpactEffectPrefab;
+  public GameObject ImpactEffectPrefab, ExplosionEffectPrefab, WaterPrefab;
   public TrailRenderer TrailRenderer;
   public SpriteRenderer BulletSpriteRenderer;
 
@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
   private float tick = 0;
   private bool followMouse = true;
   private bool throwEffect = false;
-  
+
   private bool noDamage = false;
 
   public void Init(GameObject origin, Vector3 direction, GameObject spawnPoint, Vector2 spawnPosition,
@@ -273,7 +273,7 @@ public class Bullet : MonoBehaviour
   {
     if (collision.tag.Contains("Player"))
     {
-      collision.GetComponent<IEntityHp>().DealDamage(Damage);
+      collision.GetComponent<IEntityHp>()?.DealDamage(Damage);
     }
   }
 
@@ -282,30 +282,74 @@ public class Bullet : MonoBehaviour
     var effect = Instantiate(ImpactEffectPrefab, transform.position, Quaternion.identity) as GameObject;
     effect.transform.parent = collision ? collision.transform : null;
     effect.transform.localScale *= transform.localScale.x;
-    Destroy(this.gameObject); 
+    effect.GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color;
 
     var destroyEffectTimer = 0.5f;
+    var destroyBulletTimer = 0f;
+    var byPassLaucher = false;
+    IEntityHp hpScript = null;
     if (collision != null)
     {
-      IEntityHp hpScript = collision.GetComponent<IEntityHp>() ?? null;
-      
-      if (BulletEffect == BulletEffects.BulletEffect.toxic)
-      {
-        destroyEffectTimer = 3f;
-        if (hpScript != null)
-        {
-          collision.GetComponent<IEntityHp>().ApplyPoision(Damage);
-        }
-      }
-      else if (BulletEffect == BulletEffects.BulletEffect.fire)
-      {
-        if (hpScript != null)
-        {
-          collision.GetComponent<IEntityHp>().ApplyFire();
-        }
-      }
+      hpScript = collision.GetComponent<IEntityHp>() ?? null;
     }
+
+    switch (BulletEffect)
+    {
+      case BulletEffects.BulletEffect.toxic:
+        if (!hpScript) break;
+        destroyEffectTimer = 3f;
+        hpScript.ApplyPoision(Damage);
+        break;
+      case BulletEffects.BulletEffect.fire:
+        if (!hpScript) break;
+        hpScript.ApplyFire();
+        break;
+      case BulletEffects.BulletEffect.bomb:
+        SpawnExplosion();
+        break;
+      case BulletEffects.BulletEffect.healing:
+        if (!hpScript) break;
+        Origin.GetComponent<IEntityHp>()?.DealDamage(-Damage);
+        break;
+      case BulletEffects.BulletEffect.water:
+        var water = Instantiate(WaterPrefab, transform.position, Quaternion.identity);
+        water.transform.parent = null;
+        break;
+      case BulletEffects.BulletEffect.bouncy:
+        if (!collision) break;
+        destroyBulletTimer = 3f;
+        var rotation = Random.Range(150, 210);
+        Direction = Direction.Rotate(rotation);
+        break;
+      case BulletEffects.BulletEffect.ice:
+      case BulletEffects.BulletEffect.bee:
+        destroyBulletTimer = 3f;
+        var rrotation = Random.Range(-90, 90);
+        Direction = Direction.Rotate(rrotation);
+        byPassLaucher = true;
+        break;
+      default:
+        break;
+    }
+
+    if (BulletType == BulletTypes.BulletType.Launcher && !byPassLaucher)
+    {
+      SpawnExplosion(true);
+    }
+
     Destroy(effect, destroyEffectTimer);
+    Destroy(this.gameObject, destroyBulletTimer);
+  }
+
+  private void SpawnExplosion(bool isBigExplosion = false)
+  {
+    var explosion = Instantiate(ExplosionEffectPrefab, transform.position, Quaternion.identity);
+    explosion.transform.parent = null;
+    explosion.GetComponent<Explode>().Init(Damage, BulletEffect);
+    if (isBigExplosion)
+    {
+      explosion.transform.localScale *= 2;
+    }
   }
 
   private bool ShouldIgnore(Collider2D collision)
@@ -325,6 +369,11 @@ public class Bullet : MonoBehaviour
       return true;
     }
 
+    if (collision.tag == "Water")
+    {
+      return true;
+    }
+
     return false;
   }
 
@@ -338,10 +387,10 @@ public class Bullet : MonoBehaviour
           Direction = Direction.Rotate(45);
           break;
         case 2:
-          Direction = Direction.Rotate(-45);
+          Direction = Direction.Rotate(15);
           break;
         case 3:
-          Direction = Direction.Rotate(15);
+          Direction = Direction.Rotate(-45);
           break;
         case 4:
           Direction = Direction.Rotate(-15);
@@ -363,7 +412,7 @@ public class Bullet : MonoBehaviour
   }
 
   private void InitBulletEffect()
-  { 
+  {
     var bulletColor = BulletSpriteRenderer.color;
 
     switch (BulletEffect)
@@ -377,6 +426,19 @@ public class Bullet : MonoBehaviour
         break;
       case BulletEffects.BulletEffect.fire:
         bulletColor = Color.red;
+        break;
+      case BulletEffects.BulletEffect.healing:
+        bulletColor = Color.magenta;
+        break;
+      case BulletEffects.BulletEffect.bee:
+        bulletColor = Color.yellow;
+        break;
+      case BulletEffects.BulletEffect.water:
+        bulletColor = Color.blue;
+        TrailRenderer.enabled = false;
+        break;
+      case BulletEffects.BulletEffect.ice:
+        bulletColor = Color.blue;
         break;
       case BulletEffects.BulletEffect.normal:
       default:

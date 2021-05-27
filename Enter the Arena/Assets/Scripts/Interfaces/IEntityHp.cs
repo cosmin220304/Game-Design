@@ -24,11 +24,15 @@ public abstract class IEntityHp : MonoBehaviour
       Destroy(this.gameObject);
       Destroy(deathParticles, 5);
     }
+    else if (HP > 100)
+    {
+      HP = 100;
+    }
 
-    if (!isTakingDamage)
+    if (!isTakingDamage && damage > 0)
     {
       StartCoroutine("FlashWithDamage");
-    }
+    } 
   }
 
   public void ApplyPoision(float damage)
@@ -84,11 +88,25 @@ public abstract class IEntityHp : MonoBehaviour
     isTakingDamage = false;
   }
 
+  private void WaterEffect()
+  {
+    StopCoroutine("FireDamage");
+    currentColor = initialColor;
+  }
+
   private void OnCollisionEnter2D(Collision2D collision)
   {
     if (isOnFire && collision.transform.tag.Contains("Player"))
     {
       collision.transform.GetComponent<IEntityHp>().ApplyFire();
+    }
+  }
+
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    if (collision.transform.tag == "Water")
+    {
+      WaterEffect();
     }
   }
 }
