@@ -32,6 +32,7 @@ public class EnemyGunControll : MonoBehaviour
   [SerializeField] private float circleRecoil = 0;
   [SerializeField] private bool hasRecoil;
   [SerializeField] private IMovement movementScript;
+  [SerializeField] private Vector2 PlayerLastPosition;
 
   private void Start()
   {
@@ -44,6 +45,7 @@ public class EnemyGunControll : MonoBehaviour
     currentGunRecoil = 0;
     resetRecoilTime = 0;
     circleRecoil = 0;
+    PlayerLastPosition = Target.transform.position;
   }
 
   private void Update()
@@ -60,14 +62,11 @@ public class EnemyGunControll : MonoBehaviour
     var addedRotation = isMouseRightSide ? currentGunRecoil : -currentGunRecoil;
 
     var offset = 0;
-    if (Target.transform.position.y - transform.parent.position.y < 2)
-    {
-      offset = -30;
-    }
-    else if (Target.transform.position.y < transform.parent.position.y)
+    if (Target.transform.position.y == PlayerLastPosition.y)
     {
       offset = -5;
-    }
+    } 
+    PlayerLastPosition = Target.transform.position;
     transform.rotation = Quaternion.Euler(0f, 0f, rot_z + addedRotation + offset);
     if (Math.Abs(transform.rotation.z - 90) < 5)
     {

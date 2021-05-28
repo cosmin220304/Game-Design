@@ -25,6 +25,8 @@ public class Bullet : MonoBehaviour
   private bool throwEffect = false;
 
   private bool noDamage = false;
+  private bool shootUp = false;
+  private float initalPositionY;
 
   public void Init(GameObject origin, Vector3 direction, GameObject spawnPoint, Vector2 spawnPosition,
     BulletTypes.BulletType bulletType, BulletEffects.BulletEffect bulletEffect,
@@ -51,6 +53,10 @@ public class Bullet : MonoBehaviour
 
     InitBulletType();
     InitBulletEffect();
+
+    shootUp = SpawnPoint.transform.position.y >= Origin.transform.position.y;
+    initalPositionY = SpawnPoint.transform.position.y;
+    transform.position = new Vector3(transform.position.x, transform.position.y, -25);
   }
 
   private void OnTriggerEnter2D(Collider2D collision)
@@ -125,10 +131,10 @@ public class Bullet : MonoBehaviour
     }
     else
     {
-      if (SpawnPoint.transform.position.y > Origin.transform.position.y)
+      if (shootUp)
       {
         Direction.y -= 0.1f;
-        if (transform.position.y < SpawnPoint.transform.position.y)
+        if (transform.position.y < initalPositionY)
         {
           DestroyBullet();
         }
@@ -136,7 +142,7 @@ public class Bullet : MonoBehaviour
       else
       {
         Direction.y += 0.1f;
-        if (transform.position.y > SpawnPoint.transform.position.y)
+        if (transform.position.y > initalPositionY)
         {
           DestroyBullet();
         }
