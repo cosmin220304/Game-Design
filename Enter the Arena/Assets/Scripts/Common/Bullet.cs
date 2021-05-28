@@ -398,7 +398,7 @@ public class Bullet : MonoBehaviour
       return true;
     }
 
-    if (Origin.CompareTag(collision.tag) && BulletEffect != BulletEffects.BulletEffect.bee)
+    if (Origin.CompareTag(collision.tag) && Origin.tag == "Main Player" && BulletEffect != BulletEffects.BulletEffect.bee)
     {
       return true;
     }

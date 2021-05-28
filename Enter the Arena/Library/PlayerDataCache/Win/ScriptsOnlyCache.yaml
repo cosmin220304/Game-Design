@@ -8,11 +8,13 @@ ScriptsOnlyBuild:
     - EnemyGunControll
     - EnemyHp
     - EnemyMovement
+    - Explode
     - GunControll
     - PixelBoy
     - PlayerHp
     - PlayerMovement
     - UiController
+    - Water
     AstarPathfindingProject.dll:
     - AstarPath
     - Pathfinding.Seeker
@@ -20,10 +22,13 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
+    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
+    - UnityEditor.Tilemaps.GridPaletteBrushes
+    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
@@ -39,8 +44,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -90,6 +97,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 95
       Script: {instanceID: 0}
+    - Class: 96
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
@@ -107,45 +116,49 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1822}
     - Class: 114
-      Script: {instanceID: 1872}
+      Script: {instanceID: 1874}
     - Class: 114
-      Script: {instanceID: 2060}
+      Script: {instanceID: 2062}
     - Class: 114
-      Script: {instanceID: 2160}
+      Script: {instanceID: 2162}
     - Class: 114
-      Script: {instanceID: 2554}
+      Script: {instanceID: 2556}
     - Class: 114
-      Script: {instanceID: 2712}
+      Script: {instanceID: 2564}
     - Class: 114
-      Script: {instanceID: 2756}
+      Script: {instanceID: 2716}
     - Class: 114
-      Script: {instanceID: 2900}
+      Script: {instanceID: 2760}
     - Class: 114
-      Script: {instanceID: 3132}
+      Script: {instanceID: 2908}
     - Class: 114
-      Script: {instanceID: 3152}
+      Script: {instanceID: 3140}
     - Class: 114
-      Script: {instanceID: 3174}
+      Script: {instanceID: 3160}
     - Class: 114
-      Script: {instanceID: 3246}
+      Script: {instanceID: 3182}
     - Class: 114
-      Script: {instanceID: 3574}
+      Script: {instanceID: 3254}
     - Class: 114
-      Script: {instanceID: 3706}
+      Script: {instanceID: 3582}
     - Class: 114
-      Script: {instanceID: 4178}
+      Script: {instanceID: 3714}
     - Class: 114
-      Script: {instanceID: 4418}
+      Script: {instanceID: 4168}
     - Class: 114
-      Script: {instanceID: 4450}
+      Script: {instanceID: 4188}
     - Class: 114
-      Script: {instanceID: 4794}
+      Script: {instanceID: 4432}
     - Class: 114
-      Script: {instanceID: 4992}
+      Script: {instanceID: 4464}
     - Class: 114
-      Script: {instanceID: 5092}
+      Script: {instanceID: 4808}
     - Class: 114
-      Script: {instanceID: 5180}
+      Script: {instanceID: 5006}
+    - Class: 114
+      Script: {instanceID: 5106}
+    - Class: 114
+      Script: {instanceID: 5194}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -251,7 +264,7 @@ ScriptsOnlyBuild:
     className: LayoutElement
   - hash:
       serializedVersion: 2
-      Hash: 04031d62aff66d3e0d33c633e8c98fea
+      Hash: a0a8877e64a878a29c154941d2e91dbc
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GunControll
@@ -263,7 +276,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: c0c78e226550891f2965f640474ac665
+      Hash: ca9cdbe17afdbcd1466a3a19161e03eb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UiController
@@ -297,6 +310,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_FontAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 3a09179061c08b6ca18d9b6a8394ed7f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: IMovement
   - hash:
       serializedVersion: 2
       Hash: bcb1cb4a9395b5b5db8b7a2dd4db50da
@@ -399,6 +418,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: CanvasScaler
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Explode
   - hash:
       serializedVersion: 2
       Hash: 427e4ae6223362877cde7ac01baa97c3
@@ -557,7 +582,7 @@ ScriptsOnlyBuild:
     className: TMP_SubMesh
   - hash:
       serializedVersion: 2
-      Hash: addcfaaef1284f52f71604d55602d27b
+      Hash: 3a09179061c08b6ca18d9b6a8394ed7f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerMovement
@@ -617,7 +642,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: 216b156e1ffc56bfaaab6561e50ef5a5
+      Hash: 08131cd774bb441b2d1e0b9b446796b4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyMovement
@@ -653,7 +678,7 @@ ScriptsOnlyBuild:
     className: BaseInput
   - hash:
       serializedVersion: 2
-      Hash: 02d2aa0bd68e867256a7bd6d02f8e767
+      Hash: 4a1d0c70489d92590f5279cb43ce5fa9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Bullet
@@ -755,6 +780,12 @@ ScriptsOnlyBuild:
     className: NodeLink2
   - hash:
       serializedVersion: 2
+      Hash: d41ced949a20d409afa4efae6fbb9656
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Water
+  - hash:
+      serializedVersion: 2
       Hash: aba7b2852ef61d175dd9602e7723d5e5
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -821,7 +852,7 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: d0acc137f175e6afb62f6b51f25b0a41
+      Hash: 577858d6687d94e312b25733f5f63232
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerHp
@@ -899,7 +930,7 @@ ScriptsOnlyBuild:
     className: Patrol
   - hash:
       serializedVersion: 2
-      Hash: 8536b58c8972d72947bbf3ac8a6bc513
+      Hash: 5b0d91f757d1bbc69fad761e9c019da2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyHp
@@ -923,7 +954,7 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
-      Hash: 06ae38a9b6abece6e9e4ca2168d9eef3
+      Hash: d54d1658bbdfe94ea0c8eac275125665
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyGunControll
@@ -951,6 +982,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.IK.Runtime.dll
     namespaceName: UnityEngine.U2D.IK
     className: FabrikSolver2D
+  - hash:
+      serializedVersion: 2
+      Hash: 21ee7c94d07d176cfffb15b3dee34330
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Heart
   - hash:
       serializedVersion: 2
       Hash: f08fcc1618ec9915d9530432bf8be751

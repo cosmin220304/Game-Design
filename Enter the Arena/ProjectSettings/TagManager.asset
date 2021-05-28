@@ -9,6 +9,9 @@ TagManager:
   - Main Player
   - Water
   - Bullet
+  - FxTemporaire
+  - Spawn
+  - Gun
   layers:
   - Default
   - TransparentFX
