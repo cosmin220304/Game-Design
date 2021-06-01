@@ -413,6 +413,11 @@ public class Bullet : MonoBehaviour
       return true;
     }
 
+    if (collision.tag == "Gun")
+    {
+      return true;
+    }
+
     return false;
   }
 

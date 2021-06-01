@@ -5,13 +5,11 @@ public class UiController : MonoBehaviour
 {
   public GameObject GameOverScreen;
   public GameObject PauseScreen;
-  public GameObject Weapon;
 
   private void Start()
   {
     GameOverScreen.SetActive(false);
     PauseScreen.SetActive(false);
-    Weapon.SetActive(false);
     Time.timeScale = 1;
   }
 
@@ -40,19 +38,7 @@ public class UiController : MonoBehaviour
     Scene scene = SceneManager.GetActiveScene();
     SceneManager.LoadScene(scene.name);
   }
-
-  public void ToggleWeapon()
-  {
-    if (!Weapon.activeSelf)
-    {
-      Weapon.SetActive(true);
-    }
-    else
-    {
-      Weapon.SetActive(false);
-    }
-  }
-
+   
   public void Exit()
   {
     Application.Quit();

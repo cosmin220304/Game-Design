@@ -23,13 +23,5 @@ public class PlayerMovement : IMovement
     {
       uiController.TogglePause();
     }
-  }
-
-  private void Update()
-  {
-    if (Input.GetKeyDown(KeyCode.Tab))
-    {
-      uiController.ToggleWeapon();
-    }
   } 
 }

@@ -18,7 +18,7 @@ public class EnemyGunControll : MonoBehaviour
   public BulletEffects.BulletEffect BulletEffect;
 
   [Header("Components")]
-  public float WeaponRadius = 2.5f;
+  public float WeaponRadius;
   public GameObject Enemy, Target;
   public GameObject BulletSpawn;
   public GameObject BulletPrefab;
@@ -46,6 +46,7 @@ public class EnemyGunControll : MonoBehaviour
     resetRecoilTime = 0;
     circleRecoil = 0;
     PlayerLastPosition = Target.transform.position;
+    transform.position = new Vector2(WeaponRadius, 0);
   }
 
   private void Update()

@@ -15,8 +15,11 @@ public class EnemyMovement : IMovement
   private int currentWayPoint = 0;
   private float currentDistanceAway;
 
+  public bool isPlayerTeleported;
+
   void Start()
   {
+    isPlayerTeleported = false;
     seeker = GetComponent<Seeker>();
     rb2d = GetComponent<Rigidbody2D>();
     isRetreating = false;
@@ -53,6 +56,8 @@ public class EnemyMovement : IMovement
 
   void FixedUpdate()
   {
+    if (isPlayerTeleported) return;
+
     AnimatePlayer();
 
     if (isRetreating)

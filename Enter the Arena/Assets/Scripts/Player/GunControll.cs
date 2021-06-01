@@ -1,27 +1,3 @@
-//public class Target : MonoBehaviour
-//{
-
-//    private float RotateSpeed = 5f;
-//    private float Radius = 0.1f;
-
-//    private Vector2 _centre;
-//    private float _angle;
-
-//    private void Start()
-//    {
-//        _centre = transform.position;
-//    }
-
-//    private void Update()
-//    {
-
-//        _angle += RotateSpeed * Time.deltaTime;
-
-//        var offset = new Vector2(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
-//        transform.position = _centre + offset;
-//    }
-//}
-
 using UnityEngine;
 using TMPro;
 using System.Collections;
@@ -44,7 +20,7 @@ public class GunControll : MonoBehaviour
 
   [Header("Components")]
   public TMP_Text bulletSlotsText;
-  public float WeaponRadius = 2.5f;
+  public float WeaponRadius;
   public GameObject Player;
   public GameObject BulletSpawn;
   public GameObject BulletPrefab;
@@ -59,17 +35,29 @@ public class GunControll : MonoBehaviour
   [SerializeField] private bool hasRecoil;
   [SerializeField] private IMovement movementScript;
 
+  private bool pickedUp = false;
+
   private void Start()
+  {
+    if (transform.parent.tag.Contains("Player"))
+    {
+      init();
+      pickedUp = true;
+    }
+  }
+
+  private void init()
   {
     DamageMultipliers = new float[] { 1 };
     currentBullets = BulletSlots;
     UpdateBulletSlotsInterface();
     movementScript = this.transform.parent.GetComponent<IMovement>();
+    transform.position = new Vector2(WeaponRadius, 0);
   }
 
   private void Update()
   {
-    if (Time.deltaTime == 0) return;
+    if (Time.deltaTime == 0 || !pickedUp) return;
 
     //Check if you have recoil
     hasRecoil = Recoil != 0;
