@@ -25,6 +25,7 @@ public class ShopTeleporter : MonoBehaviour
       StartCoroutine("NoobHelper");
       RegenerateWeapons();
       CleanUp();
+      collision.GetComponent<PlayerHp>().HP = 100;
     }
   }
 

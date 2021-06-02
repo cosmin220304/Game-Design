@@ -9,6 +9,7 @@ public class SpawnEnemy : MonoBehaviour
 
   public IMovement Movement;
   public EnemyGunControll EnemyGunControll;
+  public EnemyBladeControll EnemyBladeControll;
 
   public void Awake()
   {
@@ -16,10 +17,12 @@ public class SpawnEnemy : MonoBehaviour
     Enemy.SetActive(false);
 
     Movement = Enemy.GetComponent<IMovement>();
-    EnemyGunControll = Enemy.GetComponentInChildren<EnemyGunControll>();
+    EnemyGunControll = Enemy.GetComponentInChildren<EnemyGunControll>() ?? null;
+    EnemyBladeControll = Enemy.GetComponentInChildren<EnemyBladeControll>() ?? null;
 
     Movement.enabled = false;
-    EnemyGunControll.enabled = false;
+    if (EnemyGunControll != null) EnemyGunControll.enabled = false;
+    if (EnemyBladeControll != null) EnemyBladeControll.enabled = false;
   }
 
   public void SpawnEnemies()
@@ -33,7 +36,8 @@ public class SpawnEnemy : MonoBehaviour
   {
     yield return new WaitForSeconds(0.15f);
     Movement.enabled = true;
-    EnemyGunControll.enabled = true;
+    if (EnemyGunControll != null) EnemyGunControll.enabled = true;
+    if (EnemyBladeControll != null) EnemyBladeControll.enabled = true;
   }  
 
   private void Update()
