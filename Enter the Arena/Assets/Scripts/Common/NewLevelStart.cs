@@ -3,9 +3,16 @@ using UnityEngine;
 
 public class NewLevelStart : MonoBehaviour
 {
+  PlayerHp PlayerHp;
   void Start()
   {
     StartCoroutine("HideAndStartLevel");
+    PlayerHp = FindObjectOfType<PlayerHp>();
+  }
+
+  private void Update()
+  {
+    PlayerHp.DealDamage(-100);
   }
 
   IEnumerator HideAndStartLevel()
