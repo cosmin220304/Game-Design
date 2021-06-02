@@ -13,6 +13,9 @@ TagManager:
   - Spawn
   - Gun
   - Teleport
+  - Skin
+  - Ammo
+  - NoobText
   layers:
   - Default
   - TransparentFX

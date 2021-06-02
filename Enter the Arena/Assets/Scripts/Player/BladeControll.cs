@@ -13,14 +13,29 @@ public class BladeControll : MonoBehaviour
   public GameObject Player;
   public SpriteRenderer PlayerSriteRenderer, GunSpriteRenderer;
 
-  private float goForwardTime = 0;
-  private float currentWeaponRadius;
-  private bool hasComeBack = true;
-  private Vector3 initialSize;
-  private float damage;
+  [SerializeField] private float goForwardTime = 0;
+  [SerializeField] private float currentWeaponRadius;
+  [SerializeField] private bool hasComeBack = true;
+  [SerializeField] private Vector3 initialSize;
+  [SerializeField] private float damage;
+
+  public bool pickedUp = false;
 
   private void Start()
   {
+    Player = GameObject.FindGameObjectWithTag("Main Player");
+    PlayerSriteRenderer = GameObject.FindGameObjectWithTag("Skin").GetComponent<SpriteRenderer>();
+    GunSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+    if (transform.parent && transform.parent.tag.Contains("Player"))
+    {
+      init();
+    }
+  }
+
+  public void init()
+  {
+    pickedUp = true;
+    DamageMultipliers = new float[] { 1 };
     damage = 10;
     foreach (var d in DamageMultipliers)
     {
@@ -28,11 +43,12 @@ public class BladeControll : MonoBehaviour
     }
     currentWeaponRadius = WeaponRadius;
     initialSize = transform.localScale;
+    transform.localPosition = new Vector2(WeaponRadius, 0);
   }
 
   private void Update()
   {
-    if (Time.deltaTime == 0) return;
+    if (Time.deltaTime == 0 || !pickedUp) return;
 
     //Change size
     transform.localScale = BladeSize * initialSize;

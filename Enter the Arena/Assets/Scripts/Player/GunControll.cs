@@ -35,24 +35,31 @@ public class GunControll : MonoBehaviour
   [SerializeField] private bool hasRecoil;
   [SerializeField] private IMovement movementScript;
 
-  private bool pickedUp = false;
+  public bool pickedUp = false;
+  public AudioSource RecoileWarning;
+  public TMP_Text NoobText;
 
   private void Start()
   {
-    if (transform.parent.tag.Contains("Player"))
+    Player = GameObject.FindGameObjectWithTag("Main Player");
+    PlayerSriteRenderer = GameObject.FindGameObjectWithTag("Skin").GetComponent<SpriteRenderer>();
+    GunSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+    bulletSlotsText = GameObject.FindGameObjectWithTag("Ammo").GetComponent<TextMeshProUGUI>();
+    NoobText = GameObject.FindGameObjectWithTag("NoobText").GetComponentInChildren<TextMeshProUGUI>();
+    if (transform.parent && transform.parent.tag.Contains("Player"))
     {
       init();
-      pickedUp = true;
     }
   }
 
-  private void init()
+  public void init()
   {
+    pickedUp = true;
     DamageMultipliers = new float[] { 1 };
     currentBullets = BulletSlots;
     UpdateBulletSlotsInterface();
     movementScript = this.transform.parent.GetComponent<IMovement>();
-    transform.position = new Vector2(WeaponRadius, 0);
+    transform.localPosition = new Vector2(WeaponRadius, 0);
   }
 
   private void Update()
@@ -114,6 +121,12 @@ public class GunControll : MonoBehaviour
         }
         circleRecoil += 1000 / Recoil;
         resetRecoilTime = Time.time + 1 / AttackSpeed;
+
+        if (currentGunRecoil > 30 && RecoileWarning != null && RecoileWarning.isPlaying == false)
+        {
+          RecoileWarning.Play();
+          NoobText.text = "Make sure to release the button. Remember weapons have recoil.";
+        }
       }
 
       Vector2 direction = (BulletSpawn.transform.position - transform.position).normalized;
