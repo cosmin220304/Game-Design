@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 2583040}
   m_Layer: 8
   m_Name: Wave
-  m_TagString: Ammo
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: WAVE 0 / 5
+  m_text: LEVEL 2 / 4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -20868,7 +20868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnPrefab: {fileID: 811510908}
   Enemy: {fileID: 1132169703}
-  waveNo: 5
+  waveNo: 6
   Movement: {fileID: 0}
   EnemyGunControll: {fileID: 0}
   EnemyBladeControll: {fileID: 0}
@@ -24169,7 +24169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnPrefab: {fileID: 320071410}
   Enemy: {fileID: 1678859941}
-  waveNo: 4
+  waveNo: 5
   Movement: {fileID: 0}
   EnemyGunControll: {fileID: 0}
   EnemyBladeControll: {fileID: 0}
@@ -60204,7 +60204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnPrefab: {fileID: 1105221388}
   Enemy: {fileID: 289673626}
-  waveNo: 4
+  waveNo: 5
   Movement: {fileID: 0}
   EnemyGunControll: {fileID: 0}
   EnemyBladeControll: {fileID: 0}
@@ -63353,7 +63353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnPrefab: {fileID: 285446412}
   Enemy: {fileID: 2071217857}
-  waveNo: 4
+  waveNo: 5
   Movement: {fileID: 0}
   EnemyGunControll: {fileID: 0}
   EnemyBladeControll: {fileID: 0}
@@ -70004,7 +70004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnPrefab: {fileID: 1376799572}
   Enemy: {fileID: 1881543080}
-  waveNo: 4
+  waveNo: 5
   Movement: {fileID: 0}
   EnemyGunControll: {fileID: 0}
   EnemyBladeControll: {fileID: 0}

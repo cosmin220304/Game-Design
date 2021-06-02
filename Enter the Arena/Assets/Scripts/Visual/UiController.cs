@@ -8,9 +8,17 @@ public class UiController : MonoBehaviour
 
   private void Start()
   {
-    GameOverScreen.SetActive(false);
-    PauseScreen.SetActive(false);
-    Time.timeScale = 1;
+    if (SceneManager.GetActiveScene().name != "End")
+    {
+      GameOverScreen.SetActive(false);
+      PauseScreen.SetActive(false);
+      Time.timeScale = 1;
+    }
+  }
+
+  public void ReturnToMainMenu()
+  {
+    SceneManager.LoadScene("Menu");
   }
 
   public void GameOver()
